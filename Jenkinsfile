@@ -9,7 +9,7 @@ pipeline {
         GITNAME = 'PANG-J' 
         GITEMAIL = 'rhkdgus1430@gmail.com' 
         GITWEBADD = 'https://github.com/PANG-J/sb_code.git'
-        GITSSHADD = 'git@github.com:PANG-J/sb_code.git' 
+        GITSSHADD = 'git@github.com:PANG-J/spring_deployment.git' 
         GITCREDENTIAL = 'git_cre' 
         
         DOCKERHUB = 'pang916/spring'

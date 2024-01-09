@@ -5,11 +5,11 @@ pipeline {
         maven 'my_maven'
     }
     environment {
-        GITNAME = 'PANG-J' #자신의 깃허브 계정
-        GITEMAIL = 'rhkdgus1430@gmail.com' #자신의 이메일계정
+        GITNAME = 'PANG-J' 
+        GITEMAIL = 'rhkdgus1430@gmail.com' 
         GITWEBADD = 'https://github.com/PANG-J/sb_code.git'
-        GITSSHADD = 'git@github.com:PANG-J/sb_code.git' #나중에 SSH를 통해 푸쉴르 하기위해 필요
-        GITCREDENTIAL = 'git_cre'  #젠킨스 credential에서 생성 했던것을 입력.
+        GITSSHADD = 'git@github.com:PANG-J/sb_code.git' 
+        GITCREDENTIAL = 'git_cre' 
     }
     
     stages {

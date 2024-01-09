@@ -13,7 +13,7 @@ pipeline {
         GITCREDENTIAL = 'git_cre' 
         
         DOCKERHUB = 'pang916/spring'
-        DOCKERHUBCREDENTIAL = 'docker_cri'
+        DOCKERHUBCREDENTIAL = 'docker_cre'
     }
     
     stages {
@@ -58,7 +58,7 @@ pipeline {
                     sh "docker push ${DOCKERHUB}:latest"
                 }
             }
-            
+
         }
     }
 }

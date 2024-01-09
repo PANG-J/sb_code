@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     tools {
-        maven 'my_maven'
+        maven 'my maven'
     }
     environment {
         GITNAME = 'PANG-J' 

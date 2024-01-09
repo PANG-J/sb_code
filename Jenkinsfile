@@ -38,7 +38,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+               sh "docker build -t pang916/spring:1.0 ."
             }
         }
     }

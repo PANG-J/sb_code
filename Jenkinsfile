@@ -4,6 +4,7 @@ pipeline {
     tools {
         maven 'my maven'
     }
+    
     environment {
         GITNAME = 'PANG-J' 
         GITEMAIL = 'rhkdgus1430@gmail.com' 
@@ -41,7 +42,6 @@ pipeline {
                 
             }
         }
-        
         stage('image build') {
             steps {
                 sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."
@@ -59,28 +59,6 @@ pipeline {
                 }
             }
             
-            post {
-                failure {
-                    echo 'docker image push failure'
-                    sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker image rm -f ${DOCKERHUB}:latest"
-                }
-                success {
-                    echo 'docker image push success'
-                    sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker image rm -f ${DOCKERHUB}:latest"
-                }
-            }
-        }
-        
-        stage('image push') {
-            steps {
-                withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
-                    sh "docker push ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker push ${DOCKERHUB}:latest"
-                }
-            }
         }
     }
-
 }

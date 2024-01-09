@@ -39,6 +39,7 @@ pipeline {
                 sh "mvn clean package"
             }
         }
+        
         stage('image build') {
             steps {
                sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."

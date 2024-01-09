@@ -56,6 +56,8 @@ pipeline {
                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
                     sh "docker push ${DOCKERHUB}:${currentBuild.number}"
                     sh "docker push ${DOCKERHUB}:latest"
+                // withDockerRegistry : docker pipeline 플러그인 설치시 사용가능
+                // DOCKERHUBCREDENTIAL= docker_cre 만들어둔 credentials
                 }
             }
             
@@ -72,16 +74,17 @@ pipeline {
                     sh "docker image rm -f ${DOCKERHUB}:latest"
                 }
             }
+        }
         stage('k8s manifest file update') {
             steps {
                 git credentialsId: GITCREDENTIAL,
                 url: GITSSHADD,
                 branch: 'main'
         
-        // 이미지 태그 변경 후 메인 브랜치에 푸시
+                // 이미지 태그 변경 후 메인 브랜치에 푸시
                 sh "git config --global user.email ${GITEMAIL}"
                 sh "git config --global user.name ${GITNAME}"
-                sh "sed -i 's@${DOCKERHUB1}:.*@${DOCKERHUB}:${currentBuild.number}@g' deployment-wp.yml"
+                sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' deployment.yml"
         
                 sh "git add ."
                 sh "git commit -m 'fix:${DOCKERHUB} ${currentBuild.number} image versioning'"
@@ -90,17 +93,17 @@ pipeline {
                 sh "git remote add origin ${GITSSHADD}"
                 sh "git push -u origin main"
 
-        }
+            }
             post {
                 failure {
-                    echo 'k8s manifest file update failure'
+                echo 'k8s manifest file update failure'
                 }
                 success {
-                    echo 'k8s manifest file update success'  
-                        }
+                echo 'k8s manifest file update success'  
                 }
             }
         }
+
     }
 }
 

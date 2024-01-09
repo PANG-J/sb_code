@@ -15,7 +15,6 @@ pipeline {
         DOCKERHUBCREDENTIAL = 'docker_cri'
     }
     
-        
     stages {
         stage('Checkout Github') {
             steps {
@@ -42,6 +41,7 @@ pipeline {
                 
             }
         }
+        
         stage('image build') {
             steps {
                 sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."
@@ -65,7 +65,6 @@ pipeline {
                     sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
                     sh "docker image rm -f ${DOCKERHUB}:latest"
                 }
-                
                 success {
                     echo 'docker image push success'
                     sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
@@ -73,15 +72,15 @@ pipeline {
                 }
             }
         }
-         stage('image push') {
+        
+        stage('image push') {
             steps {
                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
                     sh "docker push ${DOCKERHUB}:${currentBuild.number}"
                     sh "docker push ${DOCKERHUB}:latest"
                 }
             }
-
+        }
     }
-}
 
 }

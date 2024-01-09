@@ -13,14 +13,27 @@ pipeline {
     }
     
     stages {
-        stage('Build') {
+        stage('Checkout Github') {
             steps {
-                echo 'Building..'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
+                userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITWEBADD]]])
+            }
+        
+            post {
+        
+                failure {
+                    echo 'Repository clone failure'
+                }
+                success {
+                    echo 'Repository clone success'
+                }
             }
         }
-        stage('Test') {
+        
+        
+        stage('code build') {
             steps {
-                echo 'Testing..'
+                sh "mvn clean package"
             }
         }
         stage('Deploy') {
